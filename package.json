@@ -1,0 +1,16 @@
+{
+  "name": "cli-game-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:vikkio88/cli-game-js.git",
+    "type": "git"
+  },
+  "author": "Vincenzo Ciaccio <vincenzo.ciaccio@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "clui": "^0.3.6",
+    "readline-sync": "^1.4.7",
+    "uvk": "^1.0.2"
+  }
+}
