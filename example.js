@@ -1,3 +1,4 @@
+const randomizer = require('uvk').randomizer;
 var readlineSync = require("readline-sync");
 var Clear = require("clui").Clear;
 const range = require("uvk").range;
@@ -38,9 +39,9 @@ const printMatrix = (map, position, enemyPosition) => {
     var value = "";
     row.forEach((cell, j) => {
       if (position.x === j && position.y === i) {
-        value += " * ";
+        value += " P ";
       } else if (enemyPosition.x === j && enemyPosition.y === i) {
-        value += " @ ";
+        value += " E ";
       } else {
         value += "   ";
       }
@@ -51,6 +52,10 @@ const printMatrix = (map, position, enemyPosition) => {
 };
 
 const calculateNextStep = (position, enemyPosition) => {
+  if (randomizer.chance(50)) {
+    return enemyPosition;
+  }
+
   if (enemyPosition.x > position.x) {
     enemyPosition.x -= 1;
   } else if (enemyPosition.x < position.x) {
