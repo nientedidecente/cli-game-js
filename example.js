@@ -1,13 +1,12 @@
+const grid = require('./libs/grid');
+const { area, map } = grid;
 const randomizer = require('uvk').randomizer;
 var readlineSync = require("readline-sync");
 var Clear = require("clui").Clear;
 const range = require("uvk").range;
 var key = "";
-const NUMBER_OF_LINES = 40
-var row = range(NUMBER_OF_LINES).map(() => 0);
-var map = row.map(() => row);
 
-var position = { x: NUMBER_OF_LINES / 2, y: NUMBER_OF_LINES / 2 };
+var position = { x: 5, y: 5 };
 var enemyPosition = { x: 0, y: 0 };
 
 var actions = {
@@ -52,7 +51,7 @@ const printMatrix = (map, position, enemyPosition) => {
 };
 
 const calculateNextStep = (position, enemyPosition) => {
-  if (randomizer.chance(50)) {
+  if (randomizer.chance(10)) {
     return enemyPosition;
   }
 
@@ -69,11 +68,12 @@ const calculateNextStep = (position, enemyPosition) => {
   return enemyPosition;
 }
 
+let currentArea = area(map);
 while (key !== "q") {
   Clear();
   position = actions[key] ? actions[key](position) : position;
   enemyPosition = calculateNextStep(position, enemyPosition);
-  printMatrix(map, position, enemyPosition);
+  console.log(currentArea.toString());
   console.log(position);
   console.log(enemyPosition);
   key = readlineSync.keyIn("", {
