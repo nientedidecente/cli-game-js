@@ -18,18 +18,22 @@ var enemyPosition = { x: 0, y: 0 };
 
 var actions = {
   a: function (position) {
+    position = { ...position };
     position.y -= 1;
     return position;
   },
   d: function (position) {
+    position = { ...position };
     position.y += 1;
     return position;
   },
   w: function (position) {
+    position = { ...position };
     position.x -= 1;
     return position;
   },
   s: function (position) {
+    position = { ...position };
     position.x += 1;
     return position;
   }

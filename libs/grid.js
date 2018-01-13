@@ -33,18 +33,19 @@ class Area {
         const pX = item.position.x;
         const pY = item.position.y;
         let { x, y } = newPosition;
+        console.log(`moving player at ${x} ${y} (from ${pX} ${pY})`);
 
         x = Math.min(x, ROOM_SIZE - 1);
         x = Math.max(x, 0);
 
-        y = Math.max(x, 0);
+        y = Math.max(y, 0);
         y = Math.min(y, ROOM_SIZE - 1)
 
+        console.log(`${this.map[x][y].name} at ${x} and ${y}`);
         if (!this.map[x][y].collision && item) {
             const empty = { tile: { ...BASE_TILE, ...EMPTY }, position: { x: pX, y: pY } };
-            console.log('placing empty', empty);
             this.place(empty);
-            item.setPosition(newPosition);
+            item.setPosition({ x, y });
             this.place(item);
         }
     }
