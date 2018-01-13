@@ -14,12 +14,17 @@ const EMPTY = {
 const PLAYER = {
     name: 'player',
     tile: tile('P')
+};
+
+const ENEMY = {
+    name: 'enemy',
+    tile: tile('E')
 }
 
 const BASE_TILE = {
 };
 
-module.exports = { WALL, EMPTY, PLAYER };
+module.exports = { WALL, EMPTY, PLAYER, ENEMY };
 
 
 

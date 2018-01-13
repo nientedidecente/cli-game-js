@@ -33,7 +33,7 @@ class Area {
         const pX = item.position.x;
         const pY = item.position.y;
         let { x, y } = newPosition;
-        console.log(`moving player at ${x} ${y} (from ${pX} ${pY})`);
+        console.log(`moving ${itemKey} at ${x} ${y} (from ${pX} ${pY})`);
 
         x = Math.min(x, ROOM_SIZE - 1);
         x = Math.max(x, 0);
@@ -47,7 +47,10 @@ class Area {
             this.place(empty);
             item.setPosition({ x, y });
             this.place(item);
+            return { x, y };
         }
+
+        return { x: pX, y: pY };
     }
 
     toString() {

@@ -4,7 +4,7 @@ const item = require('./libs/item');
 const { Item } = item;
 
 const tile = require('./libs/tile');
-const { PLAYER } = tile;
+const { PLAYER, ENEMY } = tile;
 
 const randomizer = require('uvk').randomizer;
 var readlineSync = require("readline-sync");
@@ -14,7 +14,7 @@ var key = "";
 
 let position = { x: 0, y: 0 };
 const playerStartingPosition = { x: 0, y: 0 };
-var enemyPosition = { x: 0, y: 0 };
+var enemyPosition = { x: 20, y: 20 };
 
 var actions = {
   a: function (position) {
@@ -40,10 +40,10 @@ var actions = {
 };
 
 const calculateNextStep = (position, enemyPosition) => {
-  if (randomizer.chance(10)) {
+  enemyPosition = { ...enemyPosition };
+  if (randomizer.chance(30)) {
     return enemyPosition;
   }
-
   if (enemyPosition.x > position.x) {
     enemyPosition.x -= 1;
   } else if (enemyPosition.x < position.x) {
@@ -60,7 +60,8 @@ const calculateNextStep = (position, enemyPosition) => {
 const currentArea = new Area(
   map,
   {
-    player: new Item(PLAYER, playerStartingPosition)
+    player: new Item(PLAYER, { ...playerStartingPosition }),
+    enemy: new Item(ENEMY, { ...enemyPosition })
   }
 );
 while (key !== "q") {
@@ -68,9 +69,10 @@ while (key !== "q") {
   position = actions[key] ? actions[key](
     currentArea.getItem('player').position
   ) : position;
-  currentArea.move('player', position);
-  position = { ...currentArea.getItem('player').position };
+  position = { ...currentArea.move('player', position) };
   enemyPosition = calculateNextStep(position, enemyPosition);
+  enemyPosition = { ...currentArea.move('enemy', enemyPosition) };
+
   console.log(currentArea.toString());
   console.log(position);
   key = readlineSync.keyIn("", {
