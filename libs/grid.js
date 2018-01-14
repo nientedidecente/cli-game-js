@@ -1,10 +1,12 @@
+const boxen = require('boxen');
 const uvk = require("uvk");
 const { range, randomizer } = uvk;
 const tile = require("./tile");
 const { BASE_TILE, EMPTY, WALL } = tile;
 
-const ROOM_SIZE = 40;
-const map = range(ROOM_SIZE).map(() => range(ROOM_SIZE).map(() => {
+const AREA_X_SIZE = 40;
+const AREA_Y_SIZE = 100;
+const map = range(AREA_X_SIZE).map(() => range(AREA_Y_SIZE).map(() => {
     if (randomizer.chance(80)) {
         return { ...BASE_TILE, ...EMPTY };
     }
@@ -35,11 +37,11 @@ class Area {
         let { x, y } = newPosition;
         console.log(`moving ${itemKey} at ${x} ${y} (from ${pX} ${pY})`);
 
-        x = Math.min(x, ROOM_SIZE - 1);
+        x = Math.min(x, AREA_X_SIZE - 1);
         x = Math.max(x, 0);
 
         y = Math.max(y, 0);
-        y = Math.min(y, ROOM_SIZE - 1)
+        y = Math.min(y, AREA_Y_SIZE - 1)
 
         console.log(`${this.map[x][y].name} at ${x} and ${y}`);
         if (!this.map[x][y].collision && item) {
@@ -60,9 +62,9 @@ class Area {
             row.forEach((tile, j) => {
                 rowValue += tile.tile;
             });
-            areaString += `${rowValue}|\n`;
+            areaString += `${rowValue}\n`;
         });
-        return (areaString += range(ROOM_SIZE).map(() => " _ ").join('') + "\n");
+        return boxen(areaString.substr(0, areaString.length - 1));
     }
 };
 

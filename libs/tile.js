@@ -1,4 +1,4 @@
-const tile = char => ` ${char} `;
+const tile = char => `${char}`;
 
 const WALL = {
     name: 'wall',
