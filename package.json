@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "boxen": "^1.3.0",
+    "chalk-pipe": "^1.1.0",
     "clui": "^0.3.6",
     "readline-sync": "^1.4.7",
     "uvk": "^1.0.2"

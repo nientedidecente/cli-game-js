@@ -32,7 +32,14 @@ camelcase@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
-chalk@^2.0.1:
+chalk-pipe:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/chalk-pipe/-/chalk-pipe-1.1.0.tgz#7f2e8689216501b8bbf10586fe0d4a26b613442d"
+  dependencies:
+    chalk "^2.1.0"
+    css-color-names "0.0.4"
+
+chalk@^2.0.1, chalk@^2.1.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
@@ -76,6 +83,10 @@ cross-spawn@^5.0.1:
     lru-cache "^4.0.1"
     shebang-command "^1.2.0"
     which "^1.2.9"
+
+css-color-names@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
 d@~0.1.1:
   version "0.1.1"

@@ -1,3 +1,5 @@
+const colours = require('./colours');
+const { redBold, blueBold } = colours;
 const WALL = {
     name: 'wall',
     tile: '█',
@@ -11,12 +13,12 @@ const EMPTY = {
 
 const PLAYER = {
     name: 'player',
-    tile: 'P'
+    tile: blueBold('P')
 };
 
 const ENEMY = {
     name: 'enemy',
-    tile: 'E'
+    tile: redBold('E')
 }
 
 const BASE_TILE = {
