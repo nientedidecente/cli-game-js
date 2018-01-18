@@ -1,24 +1,22 @@
-const tile = char => `${char}`;
-
 const WALL = {
     name: 'wall',
-    tile: tile('█'),
+    tile: '█',
     collision: true
 };
 const EMPTY = {
     name: 'empty',
-    tile: tile(' '),
+    tile: ' ',
     collision: false
 };
 
 const PLAYER = {
     name: 'player',
-    tile: tile('P')
+    tile: 'P'
 };
 
 const ENEMY = {
     name: 'enemy',
-    tile: tile('E')
+    tile: 'E'
 }
 
 const BASE_TILE = {
