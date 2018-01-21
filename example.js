@@ -14,7 +14,8 @@ var key = "";
 
 let position = { x: 0, y: 0 };
 const playerStartingPosition = { x: 0, y: 0 };
-var enemyPosition = { x: 20, y: 20 };
+let enemyPosition = { x: 20, y: 20 };
+let enemyPosition1 = { x: 10, y: 10 };
 
 var actions = {
   a: function (position) {
@@ -61,7 +62,8 @@ const currentArea = new Area(
   map,
   {
     player: new Item(PLAYER, { ...playerStartingPosition }),
-    enemy: new Item(ENEMY, { ...enemyPosition })
+    enemy: new Item(ENEMY, { ...enemyPosition }),
+    enemy2: new Item(ENEMY, { ...enemyPosition1 })
   }
 );
 while (key !== "q") {
@@ -70,8 +72,12 @@ while (key !== "q") {
     currentArea.getItem('player').position
   ) : position;
   position = { ...currentArea.move('player', position) };
+  
   enemyPosition = calculateNextStep(position, enemyPosition);
   enemyPosition = { ...currentArea.move('enemy', enemyPosition) };
+  
+  enemyPosition1 = calculateNextStep(position, enemyPosition1);
+  enemyPosition1 = { ...currentArea.move('enemy2', enemyPosition1) };
 
   console.log(currentArea.toString());
   console.log(position);
