@@ -1,17 +1,21 @@
 const boxen = require('boxen');
 const uvk = require("uvk");
-const { range, randomizer } = uvk;
+const {range, randomizer} = uvk;
+
 const tile = require("./tile");
-const { BASE_TILE, EMPTY, WALL } = tile;
+const {BASE_TILE, EMPTY, WALL} = tile;
+
+const constants = require("./const");
+const {PLAYER_KEY} = constants;
 
 const AREA_X_SIZE = 40;
 const AREA_Y_SIZE = 100;
 const map = range(AREA_X_SIZE).map(() => range(AREA_Y_SIZE).map(() => {
     if (randomizer.chance(80)) {
-        return { ...BASE_TILE, ...EMPTY };
+        return {...BASE_TILE, ...EMPTY};
     }
 
-    return { ...BASE_TILE, ...WALL };
+    return {...BASE_TILE, ...WALL};
 }));
 
 class Area {
@@ -22,6 +26,10 @@ class Area {
         Object.keys(this.items).forEach(k => this.place(this.items[k]));
     }
 
+    getPlayerPosition() {
+        return this.getItem(PLAYER_KEY).position;
+    }
+
     getItem(key) {
         return this.items[key] || {};
     }
@@ -30,11 +38,20 @@ class Area {
         this.map[item.position.x][item.position.y] = item.tile;
     }
 
+    simulate() {
+        Object.keys(this.items).forEach(k => {
+            const item = this.getItem(k);
+            if (item.auto) {
+                this.move(k, item.turn({}));
+            }
+        });
+    }
+
     move(itemKey, newPosition) {
         const item = this.getItem(itemKey);
         const pX = item.position.x;
         const pY = item.position.y;
-        let { x, y } = newPosition;
+        let {x, y} = newPosition;
         console.log(`moving ${itemKey} at ${x} ${y} (from ${pX} ${pY})`);
 
         x = Math.min(x, AREA_X_SIZE - 1);
@@ -45,18 +62,18 @@ class Area {
 
         console.log(`${this.map[x][y].name} at ${x} and ${y}`);
         if (!this.map[x][y].collision && item) {
-            const empty = { tile: { ...BASE_TILE, ...EMPTY }, position: { x: pX, y: pY } };
+            const empty = {tile: {...BASE_TILE, ...EMPTY}, position: {x: pX, y: pY}};
             this.place(empty);
-            item.setPosition({ x, y });
+            item.setPosition({x, y});
             this.place(item);
-            return { x, y };
+            return {x, y};
         }
 
-        return { x: pX, y: pY };
+        return {x: pX, y: pY};
     }
 
     toString() {
-        let areaString = ''
+        let areaString = '';
         this.map.forEach((row, i) => {
             let rowValue = "";
             row.forEach((tile, j) => {
@@ -66,6 +83,6 @@ class Area {
         });
         return boxen(areaString.substr(0, areaString.length - 1));
     }
-};
+}
 
-module.exports = { Area: Area, map: map };
+module.exports = {Area: Area, map: map};
