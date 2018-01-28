@@ -10,7 +10,7 @@ const tile = require('./libs/tile');
 const {PLAYER, ENEMY, EXIT} = tile;
 
 const behaviours = require('./libs/behaviours');
-const {chasePlayer, escapeFromPlayer} = behaviours;
+const {chasePlayer, escapeFromPlayer, distance} = behaviours;
 
 const readlineSync = require("readline-sync");
 const Clear = require("clui").Clear;
@@ -66,6 +66,7 @@ while (key !== "q") {
 
     console.log(currentArea.toString());
     console.log(position);
+    console.log(distance(position, currentArea.getItem('enemy').position));
     key = readlineSync.keyIn("", {
         hideEchoBack: true,
         mask: "",

@@ -1,10 +1,12 @@
 const randomizer = require('uvk').randomizer;
 
+const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+
 const chasePlayer = state => {
-    const {playerPosition} = state;
+    const {playerPosition, sight} = state;
     let {selfPosition} = state;
     selfPosition = {...selfPosition};
-    if (randomizer.chance(30)) {
+    if (distance(selfPosition, playerPosition) > (sight || 5)) {
         return selfPosition;
     }
     if (selfPosition.x > playerPosition.x) {
@@ -41,4 +43,4 @@ const escapeFromPlayer = state => {
 };
 
 
-module.exports = {chasePlayer, escapeFromPlayer};
+module.exports = {chasePlayer, escapeFromPlayer, distance};
