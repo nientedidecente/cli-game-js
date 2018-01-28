@@ -11,12 +11,12 @@ const {PLAYER_KEY} = constants;
 const AREA_X_SIZE = 40;
 const AREA_Y_SIZE = 100;
 const map = range(AREA_X_SIZE).map(() => range(AREA_Y_SIZE).map(() => {
-    if (randomizer.chance(80)) {
+    if (randomizer.chance(90)) {
         return {...BASE_TILE, ...EMPTY};
     }
-
     return {...BASE_TILE, ...WALL};
 }));
+
 
 class Area {
 
@@ -39,11 +39,15 @@ class Area {
     }
 
     simulate() {
+        const playerPosition = this.getPlayerPosition();
         Object.keys(this.items).forEach(k => {
             const item = this.getItem(k);
+            if (item.collided(playerPosition) && item.trigger) {
+                item.trig();
+            }
             if (item.cpu) {
                 this.move(k, item.turn({
-                    playerPosition: this.getPlayerPosition(),
+                    playerPosition,
                     selfPosition: item.position
                 }));
             }

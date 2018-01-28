@@ -7,10 +7,10 @@ const constants = require("./libs/const");
 const {PLAYER_KEY} = constants;
 
 const tile = require('./libs/tile');
-const {PLAYER, ENEMY} = tile;
+const {PLAYER, ENEMY, EXIT} = tile;
 
 const behaviours = require('./libs/behaviours');
-const {chasePlayer} = behaviours;
+const {chasePlayer, escapeFromPlayer} = behaviours;
 
 const readlineSync = require("readline-sync");
 const Clear = require("clui").Clear;
@@ -50,7 +50,8 @@ const currentArea = new Area(
     {
         [PLAYER_KEY]: new Item(PLAYER, {...playerStartingPosition}),
         enemy: new Item(ENEMY, {...enemyPosition}, chasePlayer),
-        enemy2: new Item(ENEMY, {...enemyPosition1}, chasePlayer)
+        enemy2: new Item(ENEMY, {...enemyPosition1}, escapeFromPlayer),
+        exit: new Item(EXIT, {x: 20, y: 50}, null, () => console.log('HIT EXIT'))
     }
 );
 while (key !== "q") {

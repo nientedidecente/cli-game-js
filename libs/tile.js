@@ -1,5 +1,5 @@
 const colours = require('./colours');
-const {redBold, blueBold} = colours;
+const {redBold, blueBold, yellowBold} = colours;
 
 const constants = require("./const");
 const {PLAYER_KEY} = constants;
@@ -9,6 +9,12 @@ const WALL = {
     tile: '█',
     collision: true
 };
+
+const EXIT = {
+    name: 'exit',
+    tile: yellowBold('█')
+};
+
 const EMPTY = {
     name: 'empty',
     tile: ' ',
@@ -27,7 +33,7 @@ const ENEMY = {
 
 const BASE_TILE = {};
 
-module.exports = {WALL, EMPTY, PLAYER, ENEMY};
+module.exports = {BASE_TILE, WALL, EMPTY, PLAYER, ENEMY, EXIT};
 
 
 
