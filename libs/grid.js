@@ -42,15 +42,18 @@ class Area {
         const playerPosition = this.getPlayerPosition();
         Object.keys(this.items).forEach(k => {
             const item = this.getItem(k);
+            let selfPosition = {...item.position};
             if (item.collided(playerPosition) && item.trigger) {
                 item.trig();
             }
             if (item.cpu) {
-                this.move(k, item.turn({
+                selfPosition = item.turn({
                     playerPosition,
-                    selfPosition: item.position
-                }));
+                    selfPosition
+                });
             }
+
+            this.move(k, selfPosition);
         });
     }
 
