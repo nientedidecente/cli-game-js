@@ -1,16 +1,12 @@
 const grid = require('./libs/grid');
 const {Area, map} = grid;
 const item = require('./libs/item');
-const {Item} = item;
+const {itemFactory} = item;
 
 const constants = require("./libs/const");
 const {PLAYER_KEY} = constants;
 
-const tile = require('./libs/tile');
-const {PLAYER, ENEMY, EXIT} = tile;
-
-const behaviours = require('./libs/behaviours');
-const {chasePlayer, escapeFromPlayer, distance} = behaviours;
+const distance = require('./libs/behaviours').distance;
 
 const readlineSync = require("readline-sync");
 const Clear = require("clui").Clear;
@@ -48,10 +44,10 @@ const actions = {
 const currentArea = new Area(
     map,
     {
-        [PLAYER_KEY]: new Item(PLAYER, {...playerStartingPosition}),
-        enemy: new Item(ENEMY, {...enemyPosition}, chasePlayer),
-        enemy2: new Item(ENEMY, {...enemyPosition1}, escapeFromPlayer),
-        exit: new Item(EXIT, {x: 20, y: 50}, null, () => console.log('HIT EXIT'))
+        [PLAYER_KEY]: itemFactory.makePlayer(playerStartingPosition),
+        enemy: itemFactory.makeChaser(enemyPosition),
+        enemy2: itemFactory.makeRunner(enemyPosition1),
+        exit: itemFactory.makeExit({x: 20, y: 50})
     }
 );
 while (key !== "q") {

@@ -23,6 +23,7 @@ class Area {
     constructor(map, items) {
         this.map = map;
         this.items = items;
+        console.log(items);
         Object.keys(this.items).forEach(k => this.place(this.items[k]));
     }
 
@@ -95,4 +96,4 @@ class Area {
     }
 }
 
-module.exports = {Area: Area, map: map};
+module.exports = {Area, map: map};
