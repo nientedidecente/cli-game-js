@@ -41,8 +41,11 @@ class Area {
     simulate() {
         Object.keys(this.items).forEach(k => {
             const item = this.getItem(k);
-            if (item.auto) {
-                this.move(k, item.turn({}));
+            if (item.cpu) {
+                this.move(k, item.turn({
+                    playerPosition: this.getPlayerPosition(),
+                    selfPosition: item.position
+                }));
             }
         });
     }
@@ -58,7 +61,7 @@ class Area {
         x = Math.max(x, 0);
 
         y = Math.max(y, 0);
-        y = Math.min(y, AREA_Y_SIZE - 1)
+        y = Math.min(y, AREA_Y_SIZE - 1);
 
         console.log(`${this.map[x][y].name} at ${x} and ${y}`);
         if (!this.map[x][y].collision && item) {

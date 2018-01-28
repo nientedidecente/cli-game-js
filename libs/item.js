@@ -1,7 +1,8 @@
 class Item {
-    constructor(tile, position, behaviour) {
+    constructor(tile, position, behaviour = null) {
         this.tile = tile;
         this.position = position;
+        this.cpu = !!behaviour;
         this.behaviour = behaviour;
     }
 
@@ -13,7 +14,6 @@ class Item {
         if (!this.behaviour) {
             return this.position;
         }
-
         return this.behaviour(state);
     }
 }

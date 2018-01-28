@@ -9,7 +9,9 @@ const {PLAYER_KEY} = constants;
 const tile = require('./libs/tile');
 const {PLAYER, ENEMY} = tile;
 
-const randomizer = require('uvk').randomizer;
+const behaviours = require('./libs/behaviours');
+const {chasePlayer} = behaviours;
+
 const readlineSync = require("readline-sync");
 const Clear = require("clui").Clear;
 
@@ -43,44 +45,23 @@ const actions = {
     }
 };
 
-const calculateNextStep = (position, enemyPosition) => {
-    enemyPosition = {...enemyPosition};
-    if (randomizer.chance(30)) {
-        return enemyPosition;
-    }
-    if (enemyPosition.x > position.x) {
-        enemyPosition.x -= 1;
-    } else if (enemyPosition.x < position.x) {
-        enemyPosition.x += 1;
-    }
-    if (enemyPosition.y > position.y) {
-        enemyPosition.y -= 1;
-    } else if (enemyPosition.y < position.y) {
-        enemyPosition.y += 1;
-    }
-    return enemyPosition;
-};
-
 const currentArea = new Area(
     map,
     {
         [PLAYER_KEY]: new Item(PLAYER, {...playerStartingPosition}),
-        enemy: new Item(ENEMY, {...enemyPosition}),
-        enemy2: new Item(ENEMY, {...enemyPosition1})
+        enemy: new Item(ENEMY, {...enemyPosition}, chasePlayer),
+        enemy2: new Item(ENEMY, {...enemyPosition1}, chasePlayer)
     }
 );
 while (key !== "q") {
     Clear();
+
     position = actions[key] ? actions[key](
         currentArea.getPlayerPosition()
     ) : position;
     position = {...currentArea.move(PLAYER_KEY, position)};
 
-    enemyPosition = calculateNextStep(position, enemyPosition);
-    enemyPosition = {...currentArea.move('enemy', enemyPosition)};
-
-    enemyPosition1 = calculateNextStep(position, enemyPosition1);
-    enemyPosition1 = {...currentArea.move('enemy2', enemyPosition1)};
+    currentArea.simulate();
 
     console.log(currentArea.toString());
     console.log(position);
